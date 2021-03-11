@@ -1,6 +1,11 @@
 # DateTimePickerJS
 Simple date picker made in JavaScript.<br>
 ![Datetime Picker Preview](https://github.com/andem20/DateTimePickerJS/blob/master/preview.png)
+
+<p>
+  Implementation:
+</p>
+
 ```javascript
   window.onload = function(){
     var dtPickers = [];
