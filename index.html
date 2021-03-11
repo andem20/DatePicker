@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>dtPicker</title>
+	<script type="text/javascript" src="public/js/dtPicker.1.1.js"></script>
+	<link rel="stylesheet" type="text/css" href="public/css/dtPicker.css">
+	<style type="text/css">
+		body {
+			margin:0;
+			background-color: #567DFA;
+			text-align: center;
+			width: 100%;
+			height: 100vh;
+			color: #FFF;
+			font-family: Futura;
+		}
+
+		.container {
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		input {
+			margin: 10px;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload = function(){
+			var dtPickers = [];
+			var dtpEl = document.getElementsByClassName("dtPicker");
+			for(var i = 0; i < dtpEl.length; i++){
+				dtPickers[i] = new DateTimePicker(dtpEl[i]);
+			}
+		}
+	</script>
+</head>
+	<body>
+		<div class="container">
+			<div>Date #1: <input type="text" name="date" class="dtPicker" readonly></div>
+			<div>Date #2: <input type="text" name="date" class="dtPicker" readonly></div>
+			<div>Date #3: <input type="text" name="date" class="dtPicker" readonly></div>
+		</div>
+	</body>
+</html>

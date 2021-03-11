@@ -1,0 +1,114 @@
+.dtContainer {
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    background-color: #eee;
+    border-radius: 5px;
+    margin-top: 5px;
+    display: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
+.dtContainer:before{
+    content: "";
+    position: absolute;
+    top: -19px;
+    left: 19%;
+    transform: translateX(-19%);
+    z-index: 10;
+    border: solid 10px transparent;
+    border-bottom-color: #e86d4e;
+}
+
+ul {list-style-type: none;}
+
+/* Month header */
+.dtMonth {
+    width: 100%;
+    background: #e86d4e;
+    border-radius: 5px 5px 0px 0px;
+}
+
+/* Month list */
+.dtMonth ul {
+    margin: 0;
+    padding: 10px;
+}
+
+.dtMonth ul li {
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* Previous button inside month header */
+.dtMonth .dtPrev {
+    float: left;
+    cursor: pointer;
+}
+
+.dtPrev:hover, .dtNext:hover {
+    color: #000;
+}
+
+/* Next button */
+.dtMonth .dtNext {
+    float: right;
+    cursor: pointer;
+}
+
+
+/* Weekdays (Mon-Sun) */
+.dtWeekdays {
+    margin: 0;
+    padding: 5px 0;
+    background-color:#ddd;
+}
+
+.dtWeekdays li {
+    font-size: .8em;
+    display: inline-block;
+    width: 13.6%;
+    color: #666;
+    text-align: center;
+}
+
+.dtDays {
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+    text-align: left;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.dtDays .dtDate, .dtDays li {
+    list-style-type: none;
+    display: inline-block;
+    width: 14.2%;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-size:.8em;
+    color: #777;
+}
+
+.dtDays .dtDate:hover {
+    background: #e86d4e;
+    color: #FFF;
+}
+
+.dtDays .dtDate:active {
+    background: #a54c36;
+    color: #DDD;
+}
+
+/* Highlight the "current" day */
+.dtDays .dtActive {
+    background: #1abc9c;
+    color: #FFF;
+}
