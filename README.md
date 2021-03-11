@@ -1,12 +1,8 @@
 # DateTimePickerJS
 Simple date picker made in JavaScript.<br>
 ![Datetime Picker Preview](https://github.com/andem20/DateTimePickerJS/blob/master/preview.png)
-<p>
-  ```javascript
-function fancyAlert(arg) {
-  if(arg) {
-    $.facebox({div:'#foo'})
-  }
+```
+if (isAwesome){
+  return true
 }
 ```
-</p>
