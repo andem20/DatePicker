@@ -7,47 +7,45 @@ class DateTimePicker {
         this.activeMonth = document.createElement("li");
         this.daysUL = document.createElement("ul");
         this.weekdays = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-	    this.months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	    this.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         this.curDate;
         this.curMonth;
 		this.curYear;
         this.init();
     }
 
-    createCalendar() {
-		this.container.classList.add("dtContainer");
-        this.parentContainer.parentNode.appendChild(this.container);
-        this.container.style.left = this.parentContainer.offsetLeft + "px";
-    
+    createElements() {
+        // Create elements
         let monthContainer = document.createElement("div");
-        monthContainer.classList.add("dtMonth");
-        this.container.appendChild(monthContainer);
-
         let activeMonthUL = document.createElement("ul");
-        monthContainer.appendChild(activeMonthUL);
-
-        this.previous.classList.add("dtPrev");
-        this.previous.innerHTML = "&#10094;";
-        activeMonthUL.appendChild(this.previous);
-
-        this.next.classList.add("dtNext");
-        this.next.innerHTML = "&#10095;";
-        activeMonthUL.appendChild(this.next);
-
-        this.activeMonth.innerHTML = "Month";
-        activeMonthUL.appendChild(this.activeMonth);
-
         let weekdaysUL = document.createElement("ul");
+
+        // Set styles
+        this.container.classList.add("dtContainer");
+        this.container.style.left = this.parentContainer.offsetLeft + "px";
+        monthContainer.classList.add("dtMonth");
+        this.previous.classList.add("dtPrev");
+        this.next.classList.add("dtNext");
         weekdaysUL.classList.add("dtWeekdays");
-        this.container.appendChild(weekdaysUL);
+        this.daysUL.classList.add("dtDays");
+
+        // Appending
+        this.parentContainer.parentNode.append(this.container);
+        this.container.append(monthContainer, weekdaysUL, this.daysUL);
+        monthContainer.append(activeMonthUL);
+        activeMonthUL.append(this.previous, this.next, this.activeMonth);
+
+        // Set Content
+        this.previous.innerHTML = "&#10094;";
+        this.next.innerHTML = "&#10095;";
+        this.activeMonth.innerHTML = "Month";
+
         for(var i = 0; i < this.weekdays.length; i++){
             let wd = document.createElement("li");
             wd.innerHTML = this.weekdays[i];
-            weekdaysUL.appendChild(wd);
+            weekdaysUL.append(wd);
         }
 
-        this.daysUL.classList.add("dtDays");
-        this.container.appendChild(this.daysUL);
     }
 
     daysMonth(month, year) {
@@ -78,7 +76,7 @@ class DateTimePicker {
         for(var i = 1; i < this.firstDay(this.curMonth, this.curYear); i++){
             this.days = document.createElement("li");
             this.days.innerHTML = " ";
-            this.daysUL.appendChild(this.days);
+            this.daysUL.append(this.days);
         }
 
         for(var i = 1; i <= this.daysMonth(this.curMonth, this.curYear); i++){
@@ -93,13 +91,13 @@ class DateTimePicker {
             this.daysUL.appendChild(this.days);
             this.days.addEventListener("click", function(){
                 self.curDate = this.innerHTML + " " + (parseInt(self.curMonth)) + " " + self.curYear;
-                self.parentContainer.value = self.curDate.split(" ")[0] + " " + self.months[self.curDate.split(" ")[1]] + " " + self.curDate.split(" ")[2];
+                self.parentContainer.value = self.curDate.split(" ")[0] + " " + self.months[self.curDate.split(" ")[1] - 1] + " " + self.curDate.split(" ")[2];
                 self.makeActive(this);
                 self.container.style.display = "none";
             });
         }
 
-        this.activeMonth.innerHTML = this.months[this.curMonth] + " " + this.curYear;
+        this.activeMonth.innerHTML = this.months[this.curMonth - 1] + " " + this.curYear;
     }
 
     makeActive(id) {
@@ -114,7 +112,7 @@ class DateTimePicker {
     }
     
     init() {
-        this.createCalendar();
+        this.createElements();
 
         let self = this;
 
@@ -140,6 +138,6 @@ class DateTimePicker {
             }
         });
 
-        this.parentContainer.value = this.curDate.split(" ")[0] + " " + this.months[this.curDate.split(" ")[1]] + " " + this.curDate.split(" ")[2];
+        this.parentContainer.value = this.curDate.split(" ")[0] + " " + this.months[this.curDate.split(" ")[1] - 1] + " " + this.curDate.split(" ")[2];
     }
 }
