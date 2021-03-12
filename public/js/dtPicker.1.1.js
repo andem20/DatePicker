@@ -8,9 +8,10 @@ class DateTimePicker {
         this.daysUL = document.createElement("ul");
         this.weekdays = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 	    this.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        this.curDate;
-        this.curMonth;
-		this.curYear;
+        this.selectedDate = new Date();
+        this.currentDay = this.selectedDate.getDate();
+        this.currentMonth = this.selectedDate.getMonth();
+		this.currentYear = this.selectedDate.getFullYear();
         this.init();
     }
 
@@ -40,64 +41,65 @@ class DateTimePicker {
         this.next.innerHTML = "&#10095;";
         this.activeMonth.innerHTML = "Month";
 
-        for(var i = 0; i < this.weekdays.length; i++){
+        // Create name of days
+        this.weekdays.forEach(e => {
             let wd = document.createElement("li");
-            wd.innerHTML = this.weekdays[i];
+            wd.innerHTML = e;
             weekdaysUL.append(wd);
-        }
-
+        });
     }
 
-    daysMonth(month, year) {
+    daysOfMonth(month, year) {
         return new Date(year, month, 0).getDate();
     }
 
-    firstDay(month, year) {
+    // Convert sunday to last day of the week
+    firstDayOfMonth(month, year) {
         let day = new Date(year + "-" + month + "-01").getDay();
-        day = (day === 0) ? 7 : day;
-        return day;
+        return day === 0 ? 7 : day;
     }
 
     loadDays(month, year) {
         let self = this;
-        if(month < 1){
-            this.curYear = year-1;
-            this.curMonth = 12;
-        } else if(month > 12){
-            this.curYear = year+1;
-            this.curMonth = 1;
-        } else {
-            this.curYear = year;
-            this.curMonth = month;
-        }
 
+        month = (month + 12) % 12;
+
+        this.currentYear = year;
+        if(this.currentMonth === 11 && month === 0) this.currentYear = year + 1;
+        if(this.currentMonth === 0 && month === 11) this.currentYear = year - 1;
+        this.currentMonth = month;
+
+        // Clear days
         this.daysUL.innerHTML = "";
 
-        for(var i = 1; i < this.firstDay(this.curMonth, this.curYear); i++){
-            this.days = document.createElement("li");
-            this.days.innerHTML = " ";
-            this.daysUL.append(this.days);
+        // Position the first day of the month
+        for(var i = 1; i < this.firstDayOfMonth(this.currentMonth + 1, this.currentYear); i++){
+            this.daysUL.append(document.createElement("li"));
         }
 
-        for(var i = 1; i <= this.daysMonth(this.curMonth, this.curYear); i++){
+        // Populate with days of the month
+        for(var i = 1; i <= this.daysOfMonth(this.currentMonth, this.currentYear); i++){
             this.days = document.createElement("li");
             this.days.classList.add("dtDate");
             this.days.innerHTML = i;
 
-            if(i == this.curDate.split(" ")[0] && this.months[month] == this.months[this.curDate.split(" ")[1]] && year == this.curDate.split(" ")[2]){
+            if(i === this.selectedDate.getDate() && month === this.selectedDate.getMonth() && year === this.selectedDate.getFullYear()){
                 this.days.classList.add("dtActive");
             }
 
             this.daysUL.appendChild(this.days);
             this.days.addEventListener("click", function(){
-                self.curDate = this.innerHTML + " " + (parseInt(self.curMonth)) + " " + self.curYear;
-                self.parentContainer.value = self.curDate.split(" ")[0] + " " + self.months[self.curDate.split(" ")[1] - 1] + " " + self.curDate.split(" ")[2];
+                self.selectedDate = new Date((self.currentMonth + 1) + " " + this.innerHTML + " " + self.currentYear);
+                self.parentContainer.value = self.selectedDate.getDate() + " " +
+                                             self.months[self.selectedDate.getMonth()] + " " + 
+                                             self.selectedDate.getFullYear();
                 self.makeActive(this);
                 self.container.style.display = "none";
             });
         }
 
-        this.activeMonth.innerHTML = this.months[this.curMonth - 1] + " " + this.curYear;
+        // Show selected month and year
+        this.activeMonth.innerHTML = this.months[month] + " " + this.currentYear;
     }
 
     makeActive(id) {
@@ -116,14 +118,12 @@ class DateTimePicker {
 
         let self = this;
 
-        var today = new Date();
-        this.curDate = today.getDate() + " " + (today.getMonth()+1) + " " + today.getFullYear();
-        this.loadDays(parseInt(this.curDate.split(" ")[1]), parseInt(this.curDate.split(" ")[2]));
+        this.loadDays(this.currentMonth, this.currentYear);
         
-        this.previous.addEventListener("click", function(){ self.loadDays(self.curMonth-1, self.curYear); });
-        this.next.addEventListener("click", function(){ self.loadDays(self.curMonth+1, self.curYear); });
+        this.previous.addEventListener("click", () => self.loadDays(self.currentMonth-1, self.currentYear));
+        this.next.addEventListener("click", () => self.loadDays(self.currentMonth+1, self.currentYear));
 
-        this.parentContainer.addEventListener("focus", function(){
+        this.parentContainer.addEventListener("focus", () => {
             var el = document.getElementsByClassName("dtContainer");
             for(var i = 0; i < el.length; i++){
                 el[i].style.display = "none";
@@ -132,12 +132,16 @@ class DateTimePicker {
             self.container.style.display = "block";
         });
 
-        window.addEventListener("click", function(e){
+        window.addEventListener("click", (e) => {
             if(e.target.contains(self.container)){
                 self.container.style.display = "none";
+                self.currentMonth = self.selectedDate.getMonth();
+                self.currentYear = self.selectedDate.getFullYear();
             }
         });
 
-        this.parentContainer.value = this.curDate.split(" ")[0] + " " + this.months[this.curDate.split(" ")[1] - 1] + " " + this.curDate.split(" ")[2];
+        this.parentContainer.value = this.selectedDate.getDate() + " " + 
+                                     this.months[this.selectedDate.getMonth()] + " " + 
+                                     this.selectedDate.getFullYear();
     }
 }
