@@ -1,4 +1,4 @@
-.dtContainer {
+.DatePicker-Container {
     position: absolute;
     width: 300px;
     height: 200px;
@@ -15,7 +15,7 @@
             user-select: none;
 }
 
-.dtContainer:before{
+.DatePicker-Container:before{
     content: "";
     position: absolute;
     top: -19px;
@@ -26,52 +26,52 @@
     border-bottom-color: #e86d4e;
 }
 
-ul {list-style-type: none;}
+.DatePicker-Container ul {list-style-type: none;}
 
 /* Month header */
-.dtMonth {
+.DatePicker-Month {
     width: 100%;
     background: #e86d4e;
     border-radius: 5px 5px 0px 0px;
 }
 
 /* Month list */
-.dtMonth ul {
+.DatePicker-Month ul {
     margin: 0;
     padding: 10px;
 }
 
-.dtMonth ul li {
+.DatePicker-Month ul li {
     color: white;
     text-transform: uppercase;
     letter-spacing: 3px;
 }
 
 /* Previous button inside month header */
-.dtMonth .dtPrev {
+.DatePicker-Month .DatePicker-Prev {
     float: left;
     cursor: pointer;
 }
 
-.dtPrev:hover, .dtNext:hover {
+.DatePicker-Prev:hover, .DatePicker-Next:hover {
     color: #000;
 }
 
 /* Next button */
-.dtMonth .dtNext {
+.DatePicker-Month .DatePicker-Next {
     float: right;
     cursor: pointer;
 }
 
 
 /* Weekdays (Mon-Sun) */
-.dtWeekdays {
+.DatePicker-Weekdays {
     margin: 0;
     padding: 5px 0;
     background-color:#ddd;
 }
 
-.dtWeekdays li {
+.DatePicker-Weekdays li {
     font-size: .8em;
     display: inline-block;
     width: 13.6%;
@@ -79,7 +79,7 @@ ul {list-style-type: none;}
     text-align: center;
 }
 
-.dtDays {
+.DatePicker-Days {
     padding: 10px 0;
     background: #eee;
     margin: 0;
@@ -87,7 +87,7 @@ ul {list-style-type: none;}
     border-radius: 0px 0px 5px 5px;
 }
 
-.dtDays .dtDate, .dtDays li {
+.DatePicker-Days .DatePicker-Date, .DatePicker-Days li {
     list-style-type: none;
     display: inline-block;
     width: 14.2%;
@@ -98,18 +98,18 @@ ul {list-style-type: none;}
     color: #777;
 }
 
-.dtDays .dtDate:hover {
+.DatePicker-Days .DatePicker-Date:hover {
     background: #e86d4e;
     color: #FFF;
 }
 
-.dtDays .dtDate:active {
+.DatePicker-Days .DatePicker-Date:active {
     background: #a54c36;
     color: #DDD;
 }
 
 /* Highlight the "current" day */
-.dtDays .dtActive {
+.DatePicker-Days .DatePicker-Active {
     background: #1abc9c;
     color: #FFF;
 }

@@ -1,4 +1,4 @@
-class DateTimePicker {
+class DatePicker {
     constructor(parentContainer) {
         this.parentContainer = parentContainer;
         this.container = document.createElement("div");
@@ -22,13 +22,13 @@ class DateTimePicker {
         let weekdaysUL = document.createElement("ul");
 
         // Set styles
-        this.container.classList.add("dtContainer");
+        this.container.classList.add("DatePicker-Container");
         this.container.style.left = this.parentContainer.offsetLeft + "px";
-        monthContainer.classList.add("dtMonth");
-        this.previous.classList.add("dtPrev");
-        this.next.classList.add("dtNext");
-        weekdaysUL.classList.add("dtWeekdays");
-        this.daysUL.classList.add("dtDays");
+        monthContainer.classList.add("DatePicker-Month");
+        this.previous.classList.add("DatePicker-Prev");
+        this.next.classList.add("DatePicker-Next");
+        weekdaysUL.classList.add("DatePicker-Weekdays");
+        this.daysUL.classList.add("DatePicker-Days");
 
         // Appending
         this.parentContainer.parentNode.append(this.container);
@@ -80,11 +80,11 @@ class DateTimePicker {
         // Populate with days of the month
         for(var i = 1; i <= this.daysOfMonth(this.currentMonth, this.currentYear); i++){
             this.days = document.createElement("li");
-            this.days.classList.add("dtDate");
+            this.days.classList.add("DatePicker-Date");
             this.days.innerHTML = i;
 
             if(i === this.selectedDate.getDate() && month === this.selectedDate.getMonth() && year === this.selectedDate.getFullYear()){
-                this.days.classList.add("dtActive");
+                this.days.classList.add("DatePicker-Active");
             }
 
             this.daysUL.appendChild(this.days);
@@ -103,14 +103,14 @@ class DateTimePicker {
     }
 
     makeActive(id) {
-        var els = this.container.getElementsByClassName("dtDays")[0].getElementsByTagName("li");
+        var els = this.container.getElementsByClassName("DatePicker-Days")[0].getElementsByTagName("li");
         for(var i = 0; i < els.length; i++) {
-            if(els[i].classList.contains("dtActive")) {
-                els[i].classList.remove("dtActive");
+            if(els[i].classList.contains("DatePicker-Active")) {
+                els[i].classList.remove("DatePicker-Active");
             }
         }
 
-        id.classList.toggle("dtActive");
+        id.classList.toggle("DatePicker-Active");
     }
     
     init() {
@@ -124,7 +124,7 @@ class DateTimePicker {
         this.next.addEventListener("click", () => self.loadDays(self.currentMonth+1, self.currentYear));
 
         this.parentContainer.addEventListener("focus", () => {
-            var el = document.getElementsByClassName("dtContainer");
+            var el = document.getElementsByClassName("DatePicker-Container");
             for(var i = 0; i < el.length; i++){
                 el[i].style.display = "none";
             }
