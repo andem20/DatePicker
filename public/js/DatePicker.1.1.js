@@ -8,7 +8,9 @@ class DatePicker {
         this.daysUL = document.createElement("ul");
         this.weekdays = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 	    this.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        // Set present date as seleceted date
         this.selectedDate = new Date();
+        // Set showed date in calendar
         this.currentDay = this.selectedDate.getDate();
         this.currentMonth = this.selectedDate.getMonth();
 		this.currentYear = this.selectedDate.getFullYear();
@@ -65,20 +67,20 @@ class DatePicker {
         month = (month + 12) % 12;
 
         this.currentYear = year;
-        if(this.currentMonth === 11 && month === 0) this.currentYear = year + 1;
-        if(this.currentMonth === 0 && month === 11) this.currentYear = year - 1;
+        if(this.currentMonth === 11 && month === 0) this.currentYear++;
+        if(this.currentMonth === 0 && month === 11) this.currentYear--;
         this.currentMonth = month;
 
         // Clear days
         this.daysUL.innerHTML = "";
 
         // Position the first day of the month
-        for(var i = 1; i < this.firstDayOfMonth(this.currentMonth + 1, this.currentYear); i++){
+        for(let i = 1; i < this.firstDayOfMonth(this.currentMonth + 1, this.currentYear); i++){
             this.daysUL.append(document.createElement("li"));
         }
 
         // Populate with days of the month
-        for(var i = 1; i <= this.daysOfMonth(this.currentMonth, this.currentYear); i++){
+        for(let i = 1; i <= this.daysOfMonth(this.currentMonth, this.currentYear); i++){
             this.days = document.createElement("li");
             this.days.classList.add("DatePicker-Date");
             this.days.innerHTML = i;
@@ -103,8 +105,8 @@ class DatePicker {
     }
 
     makeActive(id) {
-        var els = this.container.getElementsByClassName("DatePicker-Days")[0].getElementsByTagName("li");
-        for(var i = 0; i < els.length; i++) {
+        let els = this.container.getElementsByClassName("DatePicker-Days")[0].getElementsByTagName("li");
+        for(let i = 0; i < els.length; i++) {
             if(els[i].classList.contains("DatePicker-Active")) {
                 els[i].classList.remove("DatePicker-Active");
             }
@@ -129,14 +131,15 @@ class DatePicker {
                 el[i].style.display = "none";
             }
 
+            self.currentMonth = self.selectedDate.getMonth();
+            self.currentYear = self.selectedDate.getFullYear();
+            self.loadDays(self.currentMonth, self.currentYear);
             self.container.style.display = "block";
         });
 
         window.addEventListener("click", (e) => {
             if(e.target.contains(self.container)){
                 self.container.style.display = "none";
-                self.currentMonth = self.selectedDate.getMonth();
-                self.currentYear = self.selectedDate.getFullYear();
             }
         });
 
