@@ -41,7 +41,6 @@ class DatePicker {
         // Set Content
         this.previous.innerHTML = "&#10094;";
         this.next.innerHTML = "&#10095;";
-        this.activeMonth.innerHTML = "Month";
 
         // Create name of days
         this.weekdays.forEach(e => {
@@ -105,11 +104,9 @@ class DatePicker {
     }
 
     makeActive(id) {
-        let els = this.container.getElementsByClassName("DatePicker-Days")[0].getElementsByTagName("li");
+        let els = this.daysUL.getElementsByTagName("li");
         for(let i = 0; i < els.length; i++) {
-            if(els[i].classList.contains("DatePicker-Active")) {
-                els[i].classList.remove("DatePicker-Active");
-            }
+            els[i].classList.remove("DatePicker-Active");
         }
 
         id.classList.toggle("DatePicker-Active");
@@ -127,7 +124,7 @@ class DatePicker {
 
         this.parentContainer.addEventListener("focus", () => {
             var el = document.getElementsByClassName("DatePicker-Container");
-            for(var i = 0; i < el.length; i++){
+            for(let i = 0; i < el.length; i++){
                 el[i].style.display = "none";
             }
 
@@ -137,10 +134,15 @@ class DatePicker {
             self.container.style.display = "block";
         });
 
-        window.addEventListener("click", (e) => {
+        window.addEventListener("click", e => {
+            console.log(e.target.contains(self.container));
             if(e.target.contains(self.container)){
                 self.container.style.display = "none";
             }
+        });
+
+        window.addEventListener("resize", () => {
+            this.container.style.left = this.parentContainer.offsetLeft + "px";
         });
 
         this.parentContainer.value = this.selectedDate.getDate() + " " + 
