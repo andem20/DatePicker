@@ -135,7 +135,6 @@ class DatePicker {
         });
 
         window.addEventListener("click", e => {
-            console.log(e.target.contains(self.container));
             if(e.target.contains(self.container)){
                 self.container.style.display = "none";
             }
